@@ -8,6 +8,7 @@
 #' 
 fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
   
+  # HOURLY
   if (timeStep == "Hourly") {
     dfAZMetData <- azmetr::az_hourly(
       station_id = dplyr::filter(stns, stationName == station)$stationID,
@@ -17,27 +18,28 @@ fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
     
     # Set identification variables of interest from the following hourly data variables: 
     # c("date_datetime", "date_doy", "date_hour", "date_year", "meta_needs_review", "meta_station_id", "meta_station_name", "meta_version")
-    varsID <- c("meta_station_name", "meta_station_id", "meta_version", "date_datetime", "date_year", "date_hour", "date_doy")
+    varsID <- c("meta_bat_volt", "meta_needs_review", "meta_station_id", "meta_station_name", "meta_version", "date_datetime", "date_doy", "date_hour", "date_year")
     
     # Set hourly measured variables of interest from the following:
     # c("dwpt", "dwptF", "eto_azmet", "eto_azmet_in", "heatstress_cottonC", "heatstress_cottonF", "meta_bat_volt", "precip_total", "precip_total_in", "relative_humidity", "sol_rad_total", "sol_rad_total_ly", "temp_airC", "temp_airF", "temp_soil_10cmC", "temp_soil_10cmF", "temp_soil_50cmC", "temp_soil_50cmF", "vp_actual", "vp_deficit", "wind_2min_spd_max_mph", "wind_2min_spd_max_mps", "wind_2min_spd_mean_mph", "wind_2min_spd_mean_mps", "wind_2min_timestamp", "wind_2min_vector_dir", "wind_spd_max_mph", "wind_spd_max_mps", "wind_spd_mph", "wind_spd_mps", "wind_vector_dir", "wind_vector_dir_stand_dev", "wind_vector_magnitude", "wind_vector_magnitude_mph")
     varsMeasure <- c("dwpt", "dwptF", "eto_azmet", "eto_azmet_in", "heatstress_cottonC", "heatstress_cottonF", "precip_total", "precip_total_in", "relative_humidity", "sol_rad_total", "sol_rad_total_ly", "temp_airC", "temp_airF", "temp_soil_10cmC", "temp_soil_10cmF", "temp_soil_50cmC", "temp_soil_50cmF", "vp_actual", "vp_deficit", "wind_2min_spd_max_mph", "wind_2min_spd_max_mps", "wind_2min_spd_mean_mph", "wind_2min_spd_mean_mps", "wind_2min_timestamp", "wind_2min_vector_dir", "wind_spd_max_mph", "wind_spd_max_mps", "wind_spd_mph", "wind_spd_mps", "wind_vector_dir", "wind_vector_dir_stand_dev", "wind_vector_magnitude", "wind_vector_magnitude_mph")
    
     # For case of empty data return
-    #if (nrow(dfAZMetData) == 0) {
-    #  dfAZMetData <- data.frame(matrix(nrow = 0, ncol = length(c(varsID, varsMeasure))))
-    #  colnames(dfAZMetData) <- c(varsID, varsMeasure)
-    #} else {
+    if (nrow(dfAZMetData) == 0) {
+      dfAZMetData <- data.frame(matrix(nrow = 0, ncol = length(c(varsID, varsMeasure))))
+      colnames(dfAZMetData) <- c(varsID, varsMeasure)
+    } else {
       # Tidy data
-    #  dfAZMetData <- dfAZMetData %>%
-    #    dplyr::select(all_of(c(varsID, varsMeasure))) %>%
-    #    dplyr::mutate(date_doy = as.integer(.data$date_doy)) %>%
-    #    dplyr::mutate(date_year = as.integer(.data$date_year)) %>%
-    #    dplyr::mutate(datetime = as.character(.data$datetime)) #%>%
-      #dplyr::mutate(heat_units_55F = round(.data$heat_units_55F, digits = 1))
-    #} 
+      dfAZMetData <- dfAZMetData %>%
+        dplyr::select(all_of(c(varsID, varsMeasure))) %>%
+        #dplyr::mutate(date_doy = as.integer(.data$date_doy)) %>%
+        #dplyr::mutate(date_year = as.integer(.data$date_year)) %>%
+        #dplyr::mutate(across(c(date_doy, date_year)) = as.integer) %>%
+        dplyr::mutate(date_datetime = as.character(.data$date_datetime))
+    } 
   }
   
+  # DAILY
   if (timeStep == "Daily") {
     dfAZMetData <- azmetr::az_daily(
       station_id = dplyr::filter(stns, stationName == station)$stationID, 
@@ -61,10 +63,11 @@ fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
     } else {
     # Tidy data
       dfAZMetData <- dfAZMetData %>%
-        dplyr::select(all_of(c(varsID, varsMeasure))) %>%
-        dplyr::mutate(date_doy = as.integer(.data$date_doy)) %>%
-        dplyr::mutate(date_year = as.integer(.data$date_year)) %>%
-        dplyr::mutate(datetime = as.character(.data$datetime)) #%>%
+        dplyr::select(all_of(c(varsID, varsMeasure))) #%>%
+        #dplyr::mutate(across(c(meta_needs_review, meta_version, date_datetime), as.character))
+        #dplyr::mutate(date_doy = as.integer(.data$date_doy)) %>%
+        #dplyr::mutate(date_year = as.integer(.data$date_year)) %>%
+        #plyr::mutate(datetime = as.character(.data$datetime)) #%>%
         #dplyr::mutate(heat_units_55F = round(.data$heat_units_55F, digits = 1))
     }
   }
