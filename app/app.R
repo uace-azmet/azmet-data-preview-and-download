@@ -168,6 +168,7 @@ ui <- fluidPage(
       <style>#sidebarPanel {background-color: #E2E9EB !important; border-radius: 0px !important; padding-top: 12px !important;}</style>
       <style>.datepicker {background-color: #FFFFFF !important; color: #000000 !important; font-size: 100% !important;}</style>
       <style>.form-control {font-size: 100% !important;}</style>
+      <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
       <style>.shiny-output-error-datepicker {background-color: #F19E1F; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
       <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
       <style>.shiny-notification {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: italic; font-weight: medium; margin-bottom: 20px; padding: 12px; position: fixed; top: calc(50%); left: calc(40%);}</style>
@@ -492,9 +493,22 @@ ui <- fluidPage(
       id = "mainPanel",
       width = 8,
       
-      #tableOutput(outputId = "dataTablePreview"),
-      # https://community.rstudio.com/t/how-to-add-a-horizontal-and-vertical-scroll-bar-to-r-shiny-app-to-display-a-full-content-by-scrolling/116754
-      shinydashboard::box(style = 'overflow-x: scroll; overflow-y: scroll;', height = "240px", width = "100%", tableOutput(outputId = "dataTablePreview")),
+      shinydashboard::box(
+        title = "title text",
+        footer = "footer text",
+        status = "primary",
+        #style = 'width:auto; overflow-x:scroll; height:auto overflow-y:scroll;', 
+        solidHeader = TRUE,
+        width = NULL, 
+        height = NULL,
+        #collapsible = FALSE,
+        #collapsed = FALSE,
+        div(
+            style = 'width:auto; height:400px; overflow:auto; position:sticky;', 
+            tableOutput(outputId = "dataTablePreview")
+        )
+        #tableOutput(outputId = "dataTablePreview")
+      ),
       
       br(),
       downloadButton(outputId = "downloadData", label = "Download .csv")#,
@@ -682,7 +696,19 @@ server <- function(input, output, session) {
   
   # Outputs -----
   
-  output$dataTablePreview <- renderTable(expr = dfAZMetData(), striped = TRUE, hover = FALSE, bordered = FALSE, spacing = "xs", width = "100%", align = "c", rownames = FALSE, colnames = TRUE, digits = NULL, na = "na")
+  output$dataTablePreview <- renderTable(
+    expr = dfAZMetData(), 
+    striped = TRUE, 
+    hover = TRUE, 
+    bordered = FALSE, 
+    spacing = "xs", 
+    width = "auto", 
+    align = "c", 
+    rownames = FALSE, 
+    colnames = TRUE, 
+    digits = NULL, 
+    na = "na"
+  )
   
   #output$figCaption <- renderUI(
   #  figCaption()
