@@ -1,11 +1,11 @@
-#' fxnAZMetDataELT: AZMet hourly or daily data download from API-based database
-#' 
-#' @param: station - AZMet station name
-#' @param: timeStep - AZMet data time step
-#' @param: startDate - start date of period of interest
-#' @param: endDate - end date of period of interest
-#' @return: dfAZMetData - transformed data table
-#' 
+# fxnAZMetDataELT: AZMet hourly or daily data download from API-based database
+# 
+# @param: station - AZMet station name
+# @param: timeStep - AZMet data time step
+# @param: startDate - start date of period of interest
+# @param: endDate - end date of period of interest
+# @return: dfAZMetData - transformed data table
+# 
 fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
   
   # HOURLY
@@ -32,10 +32,14 @@ fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
       # Tidy data
       dfAZMetData <- dfAZMetData %>%
         dplyr::select(all_of(c(varsID, varsMeasure))) %>%
+        dplyr::mutate(dplyr::across(
+          c("meta_needs_review", "meta_version", "date_doy", "date_year", "relative_humidity", "wind_2min_vector_dir", "wind_vector_dir"),
+          as.integer
+        ))
         #dplyr::mutate(date_doy = as.integer(.data$date_doy)) %>%
         #dplyr::mutate(date_year = as.integer(.data$date_year)) %>%
-        #dplyr::mutate(across(c(date_doy, date_year)) = as.integer) %>%
-        dplyr::mutate(date_datetime = as.character(.data$date_datetime))
+        #dplyr::mutate(across(c(date_doy, date_year)), as.integer) %>%
+        #dplyr::mutate(across(c(date_datetime, wind_2min_timestamp), as.character))
     } 
   }
   

@@ -1,14 +1,8 @@
 
 
-# Shipped to operational version on: 
-
-# Download hourly and daily data by specified stations and date ranges since January 1, 2021
+# Preview and download hourly and daily data by specified stations and date ranges since January 1, 2021
 
 # TODO: 
-# 
-# fxnAZMetDataELT.R
-# 
-# Figure out why wrench icon does not show
 # 
 # Load download buttons after data preview
 # 
@@ -31,6 +25,7 @@ library(lubridate)
 #library(reactable)
 library(shiny)
 library(shinydashboard)
+library(vctrs)
 library(vroom)
 
 # Functions -----
@@ -168,6 +163,7 @@ ui <- fluidPage(
       <style>#sidebarPanel {background-color: #E2E9EB !important; border-radius: 0px !important; padding-top: 12px !important;}</style>
       <style>.datepicker {background-color: #FFFFFF !important; color: #000000 !important; font-size: 100% !important;}</style>
       <style>.form-control {font-size: 100% !important;}</style>
+      <style>.shiny-html-output {max-height: 300px; min-height: auto; overflow: auto;}</style>
       <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
       <style>.shiny-output-error-datepicker {background-color: #F19E1F; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
       <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
@@ -503,11 +499,10 @@ ui <- fluidPage(
         height = NULL,
         #collapsible = FALSE,
         #collapsed = FALSE,
-        div(
-            style = 'width:auto; height:400px; overflow:auto; position:sticky;', 
-            tableOutput(outputId = "dataTablePreview")
-        )
-        #tableOutput(outputId = "dataTablePreview")
+        #div(style = 'width:auto; overflow-x:auto; position:sticky;', 
+        #    tableOutput(outputId = "dataTablePreview")
+        #)
+        tableOutput(outputId = "dataTablePreview")
       ),
       
       br(),
