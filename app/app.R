@@ -25,7 +25,7 @@ library(lubridate)
 #library(reactable)
 library(shiny)
 library(shinydashboard)
-library(vctrs)
+#library(vctrs)
 library(vroom)
 
 # Functions -----
@@ -154,16 +154,16 @@ ui <- fluidPage(
       
       <!-- specific to this app -->
       
-      <style>#downloadData {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
-      <style>#downloadData:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
-      <style>#downloadData:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
+      <style>#downloadCSV {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
+      <style>#downloadCSV:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
+      <style>#downloadCSV:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
       <style>#previewData {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
       <style>#previewData:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
       <style>#previewData:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
       <style>#sidebarPanel {background-color: #E2E9EB !important; border-radius: 0px !important; padding-top: 12px !important;}</style>
       <style>.datepicker {background-color: #FFFFFF !important; color: #000000 !important; font-size: 100% !important;}</style>
       <style>.form-control {font-size: 100% !important;}</style>
-      <style>.shiny-html-output {max-height: 300px; min-height: auto; overflow: auto;}</style>
+      <style>.shiny-html-output {max-height: 305px; min-height: auto; overflow: auto;}</style>
       <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
       <style>.shiny-output-error-datepicker {background-color: #F19E1F; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
       <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
@@ -506,7 +506,7 @@ ui <- fluidPage(
       ),
       
       br(),
-      downloadButton(outputId = "downloadData", label = "Download .csv")#,
+      downloadButton(outputId = "downloadCSV", label = "Download .csv")#,
       #downloadButton(outputId = "downloadData", label = "Download .tsv"),
       #downloadButton(outputId = "downloadData", label = "Download .xlsx")
     )
@@ -692,7 +692,7 @@ server <- function(input, output, session) {
   # Outputs -----
   
   output$dataTablePreview <- renderTable(
-    expr = dfAZMetData(), 
+    expr = fxnDataPreview(inData = dfAZMetData(), timeStep = input$timeStep), 
     striped = TRUE, 
     hover = TRUE, 
     bordered = FALSE, 
@@ -722,12 +722,12 @@ server <- function(input, output, session) {
   #  head(data())
   #})
   
-  output$download <- downloadHandler(
+  output$downloadCSV <- downloadHandler(
     filename = function() {
-      paste0(input$dataset, ".csv")
+      paste0(input$station, ".csv")
     },
     content = function(file) {
-      vroom::vroom_write(data(), file)
+      vroom::vroom_write(x = dfAZMetData(), file = file, delim = ",")
     }
   )
 }
