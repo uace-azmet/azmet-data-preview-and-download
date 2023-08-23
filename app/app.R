@@ -152,9 +152,9 @@ ui <- fluidPage(
       <style>.form-control {font-size: 100% !important;}</style>
       <style>.shiny-html-output {max-height: 381px; min-height: auto; overflow: auto;}</style>
       <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
-      <style>.shiny-output-error-datepicker {background-color: #F19E1F; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
-      <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
-      <style>.shiny-notification {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: italic; font-weight: medium; margin-bottom: 20px; padding: 12px; position: fixed; top: calc(50%); left: calc(40%);}</style>
+      <style>.shiny-output-error-datepicker {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
+      <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
+      <style>.shiny-notification {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: italic; font-weight: medium; margin-bottom: 20px; padding: 12px; position: fixed; top: calc(50%); left: calc(40%)}</style>
       
     </head>
   '),
