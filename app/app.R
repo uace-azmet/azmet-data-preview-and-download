@@ -1,17 +1,6 @@
 
 
-# Preview and download hourly and daily data by specified stations and date ranges since January 1, 2021
-
-# TODO: 
-# 
-# Load download buttons after data preview
-# 
-# Format table preview, https://glin.github.io/reactable/articles/examples.html (scroll), shinydashboard::box() options
-
-# Author:
-# Jeremy Weiss, AZMet Program Manager
-# University of Arizona Cooperative Extension
-# 520-621-1319, jlweiss@arizona.edu
+# Preview and download hourly and daily data by specified stations and date ranges from API database
 
 
 # SETUP -------------------------
@@ -22,10 +11,8 @@
 library(azmetr)
 library(dplyr)
 library(lubridate)
-#library(reactable)
 library(shiny)
 library(shinydashboard)
-#library(vctrs)
 library(vroom)
 
 # Functions -----
@@ -154,16 +141,16 @@ ui <- fluidPage(
       
       <!-- specific to this app -->
       
-      <style>#downloadCSV {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
-      <style>#downloadCSV:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
-      <style>#downloadCSV:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
+      <style>#downloadTSV {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
+      <style>#downloadTSV:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
+      <style>#downloadTSV:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
       <style>#previewData {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
       <style>#previewData:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
       <style>#previewData:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
-      <style>#sidebarPanel {background-color: #E2E9EB !important; border-radius: 0px !important; padding-top: 12px !important;}</style>
+      <style>#sidebarPanel {background-color: #E2E9EB !important; border-radius: 0px !important; padding-bottom: 24px !important; padding-top: 12px !important; margin-bottom: 72px !important;}</style>
       <style>.datepicker {background-color: #FFFFFF !important; color: #000000 !important; font-size: 100% !important;}</style>
       <style>.form-control {font-size: 100% !important;}</style>
-      <style>.shiny-html-output {max-height: 305px; min-height: auto; overflow: auto;}</style>
+      <style>.shiny-html-output {max-height: 381px; min-height: auto; overflow: auto;}</style>
       <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
       <style>.shiny-output-error-datepicker {background-color: #F19E1F; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
       <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
@@ -433,7 +420,9 @@ ui <- fluidPage(
       width = 4,
       
       verticalLayout(
-        helpText(em("Select an AZMet station, specify the time step, and set dates for the period of interest. Then, click or tap 'Preview Data'.")),
+        helpText(em(
+          "Select an AZMet station, specify the time step, and set dates for the period of interest. Then, click or tap 'Preview Data'."
+        )),
         
         br(),
         selectInput(
@@ -489,27 +478,30 @@ ui <- fluidPage(
       id = "mainPanel",
       width = 8,
       
-      shinydashboard::box(
-        title = "title text",
-        footer = "footer text",
-        status = "primary",
-        #style = 'width:auto; overflow-x:scroll; height:auto overflow-y:scroll;', 
-        solidHeader = TRUE,
-        width = NULL, 
-        height = NULL,
-        #collapsible = FALSE,
-        #collapsed = FALSE,
-        #div(style = 'width:auto; overflow-x:auto; position:sticky;', 
-        #    tableOutput(outputId = "dataTablePreview")
-        #)
-        tableOutput(outputId = "dataTablePreview")
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableTitle"))
+      ), 
+      
+      br(),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, tableOutput(outputId = "dataTablePreview"))
+      ), 
+      
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableFooter"))
       ),
       
       br(),
-      downloadButton(outputId = "downloadCSV", label = "Download .csv")#,
-      #downloadButton(outputId = "downloadData", label = "Download .tsv"),
-      #downloadButton(outputId = "downloadData", label = "Download .xlsx")
-    )
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, uiOutput(outputId = "downloadButtonTSV"))
+      ),
+      
+      br(), br(),
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableCaption"))
+      ),
+      br()
+    ) # mainPanel()
   ), # sidebarLayout()
   
   # <body> : "main-wrapper" : end -----
@@ -643,51 +635,58 @@ server <- function(input, output, session) {
   # Download/load and prep AZMet data
   dfAZMetData <- eventReactive(input$previewData, {
     if (input$startDate > input$endDate) {
-      validate("Please select a 'Start Date' that is earlier than or equal to the 'End Date'.",
-               errorClass = "datepickerBlank")
+      validate(
+        "Please select a 'Start Date' that is not later than the 'End Date'.",
+        errorClass = "datepicker"
+      )
     }
     
-    id <- showNotification(ui = "Preparing data preview . . .", 
-                           action = NULL, duration = NULL, closeButton = FALSE, type = "message")
-    on.exit(removeNotification(id), add = TRUE)
+    idPreview <- showNotification(
+      ui = "Preparing data preview . . .", 
+      action = NULL, 
+      duration = NULL, 
+      closeButton = FALSE, 
+      type = "message"
+    )
     
-    fxnAZMetDataELT(station = input$station, 
-                    timeStep = input$timeStep, 
-                    startDate = input$startDate, 
-                    endDate = input$endDate)
+    on.exit(removeNotification(idPreview), add = TRUE)
+    
+    fxnAZMetDataELT(
+      station = input$station, 
+      timeStep = input$timeStep, 
+      startDate = input$startDate, 
+      endDate = input$endDate
+    )
   })
   
-  # Build figure caption
-  #figCaption <- eventReactive(input$calculate, {
-  #  if (input$plantingDate >= input$endDate) {
-  #    validate("Please select a 'Planting Date' that is earlier than the 'End Date'.",
-  #             errorClass = "datepickerBlank")
-  #  }
-  #  
-  #  fxnFigCaption(inStation = input$station, inPlantingDate = input$plantingDate, inEndDate = input$endDate)
-  #})
-  
-  # Build figure
-  #figGrowthStage <- eventReactive(input$calculate, {
-  #  if (input$plantingDate >= input$endDate) {
-  #    validate("Please select a 'Planting Date' that is earlier than the 'End Date'.",
-  #             errorClass = "datepickerBlank")
-  #  }
-  #  
-  #  figData = dfAZMetDaily()
-  #  
-  #  fxnFigGrowthStage(inData = figData, inStation = input$station, inPlantingDate = input$plantingDate, inEndDate = input$endDate)
-  #})
-  
-  # Build figure title
-  #figTitle <- eventReactive(input$calculate, {
-  #  if (input$plantingDate >= input$endDate) {
-  #    validate("Please select a 'Planting Date' that is earlier than the 'End Date'.",
-  #             errorClass = "datepicker")
-  #  }
+  # Build table caption
+  tableCaption <- eventReactive(input$previewData, {
+    if (input$startDate > input$endDate) {
+      validate(
+        "Please select a 'Start Date' that is not later than the 'End Date'.",
+        errorClass = "datepickerblank"
+      )
+    }
     
-  #  figTitle <- HTML("<h3 style='color:#343a40; font-weight:bold'>Cotton Growth Stages and Cumulative Heat Units (86/55 °F) since Planting</h3>")
-  #  })
+    tableCaption <- fxnTableCaption(timeStep = input$timeStep)
+  })
+  
+  # Build table title
+  tableTitle <- eventReactive(input$previewData, {
+    if (input$startDate > input$endDate) {
+      validate(
+        "Please select a 'Start Date' that is not later than the 'End Date'.",
+        errorClass = "datepickerblank"
+      )
+    }
+  
+    tableTitle <- fxnTableTitle(
+      station = input$station,
+      timeStep = input$timeStep,
+      startDate = input$startDate,
+      endDate = input$endDate
+    )
+  })
   
   # Outputs -----
   
@@ -705,31 +704,32 @@ server <- function(input, output, session) {
     na = "na"
   )
   
-  #output$figCaption <- renderUI(
-  #  figCaption()
-  #)
+  output$downloadButtonTSV <- renderUI({
+    req(dfAZMetData())
+    downloadButton("downloadTSV", label = "Download .tsv")
+  })
   
-  #output$figGrowthStage <- renderPlot({
-  #  figGrowthStage()
-  #}, res = 96)
-  
-  #output$figTitle <- renderUI(
-  #  figTitle()
-  #)
-    
-  
-  #output$preview <- renderTable({
-  #  head(data())
-  #})
-  
-  output$downloadCSV <- downloadHandler(
+  output$downloadTSV <- downloadHandler(
     filename = function() {
-      paste0(input$station, ".csv")
+      paste0(input$station, input$timeStep, input$startDate, "-", input$endDate, ".tsv")
     },
     content = function(file) {
-      vroom::vroom_write(x = dfAZMetData(), file = file, delim = ",")
+      vroom::vroom_write(x = dfAZMetData(), file = file, delim = "\t")
     }
   )
+  
+  output$tableFooter <- renderUI({
+    req(dfAZMetData())
+    helpText(em("Click or tap the below button to download a file of the previewed data with tab-separated values."))
+  })
+  
+  output$tableCaption <- renderUI({
+    tableCaption()
+  })
+  
+  output$tableTitle <- renderUI({
+    tableTitle()
+  })
 }
 
 
