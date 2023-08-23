@@ -637,7 +637,7 @@ server <- function(input, output, session) {
     if (input$startDate > input$endDate) {
       validate(
         "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepicker"
+        errorClass = "datepickerBlank"
       )
     }
     
@@ -664,7 +664,7 @@ server <- function(input, output, session) {
     if (input$startDate > input$endDate) {
       validate(
         "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepicker"
+        errorClass = "datepickerBlank"
       )
     }
     
@@ -679,7 +679,7 @@ server <- function(input, output, session) {
     if (input$startDate > input$endDate) {
       validate(
         "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerblank"
+        errorClass = "datepickerBlank"
       )
     }
     
@@ -691,7 +691,7 @@ server <- function(input, output, session) {
     if (input$startDate > input$endDate) {
       validate(
         "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerblank"
+        errorClass = "datepicker"
       )
     }
   
@@ -726,7 +726,7 @@ server <- function(input, output, session) {
   
   output$downloadTSV <- downloadHandler(
     filename = function() {
-      paste0(input$station, input$timeStep, input$startDate, "-", input$endDate, ".tsv")
+      paste0(input$station, input$timeStep, input$startDate, "to", input$endDate, ".tsv")
     },
     content = function(file) {
       vroom::vroom_write(x = dfAZMetData(), file = file, delim = "\t")
