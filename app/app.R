@@ -720,7 +720,7 @@ server <- function(input, output, session) {
   
   output$tableFooter <- renderUI({
     req(dfAZMetData())
-    helpText(em("Click or tap the below button to download a file of the previewed data with tab-separated values."))
+    helpText(em("Click or tap the button below to download a file of the previewed data with tab-separated values."))
   })
   
   output$tableCaption <- renderUI({
