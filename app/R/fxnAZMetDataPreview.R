@@ -1,10 +1,10 @@
-# fxnDataPreview: Format downloaded AZMet hourly or daily data for HTML table preview
+# fxnAZMetDataPreview: Format downloaded AZMet hourly or daily data for HTML table preview
 # 
 # @param: inData - downloaded AZMet hourly or daily data
 # @param: timeStep - AZMet data time step
 # @return: dfAZMetDataPreview - data table formatted for HTML table
 # 
-fxnDataPreview <- function(inData, timeStep) {
+fxnAZMetDataPreview <- function(inData, timeStep) {
   
   # HOURLY "date_datetime", "wind_2min_timestamp"
   if (timeStep == "Hourly") {

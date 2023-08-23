@@ -152,9 +152,9 @@ ui <- fluidPage(
       <style>.form-control {font-size: 100% !important;}</style>
       <style>.shiny-html-output {max-height: 381px; min-height: auto; overflow: auto;}</style>
       <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
-      <style>.shiny-output-error-datepicker {background-color: #F19E1F; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
-      <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 105%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
-      <style>.shiny-notification {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: italic; font-weight: medium; margin-bottom: 20px; padding: 12px; position: fixed; top: calc(50%); left: calc(40%);}</style>
+      <style>.shiny-output-error-datepicker {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
+      <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
+      <style>.shiny-notification {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: italic; font-weight: medium; margin-bottom: 20px; padding: 12px; position: fixed; top: calc(50%); left: calc(40%)}</style>
       
     </head>
   '),
@@ -632,12 +632,12 @@ server <- function(input, output, session) {
   
   # Reactive events -----
   
-  # Download/load and prep AZMet data
+  # AZMet data ELT
   dfAZMetData <- eventReactive(input$previewData, {
     if (input$startDate > input$endDate) {
       validate(
-        "Please select a 'Start Date' that is not later than the 'End Date'.",
-        errorClass = "datepicker"
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+        errorClass = "datepickerBlank"
       )
     }
     
@@ -659,12 +659,27 @@ server <- function(input, output, session) {
     )
   })
   
+  # Format AZMet data for HTML table preview
+  dfAZMetDataPreview <- eventReactive(input$previewData, {
+    if (input$startDate > input$endDate) {
+      validate(
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+        errorClass = "datepickerBlank"
+      )
+    }
+    
+    fxnAZMetDataPreview(
+      inData = dfAZMetData(), 
+      timeStep = input$timeStep
+    )
+  })
+  
   # Build table caption
   tableCaption <- eventReactive(input$previewData, {
     if (input$startDate > input$endDate) {
       validate(
-        "Please select a 'Start Date' that is not later than the 'End Date'.",
-        errorClass = "datepickerblank"
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+        errorClass = "datepickerBlank"
       )
     }
     
@@ -675,8 +690,8 @@ server <- function(input, output, session) {
   tableTitle <- eventReactive(input$previewData, {
     if (input$startDate > input$endDate) {
       validate(
-        "Please select a 'Start Date' that is not later than the 'End Date'.",
-        errorClass = "datepickerblank"
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+        errorClass = "datepicker"
       )
     }
   
@@ -691,7 +706,7 @@ server <- function(input, output, session) {
   # Outputs -----
   
   output$dataTablePreview <- renderTable(
-    expr = fxnDataPreview(inData = dfAZMetData(), timeStep = input$timeStep), 
+    expr = dfAZMetDataPreview(), 
     striped = TRUE, 
     hover = TRUE, 
     bordered = FALSE, 
@@ -711,7 +726,7 @@ server <- function(input, output, session) {
   
   output$downloadTSV <- downloadHandler(
     filename = function() {
-      paste0(input$station, input$timeStep, input$startDate, "-", input$endDate, ".tsv")
+      paste0(input$station, input$timeStep, input$startDate, "to", input$endDate, ".tsv")
     },
     content = function(file) {
       vroom::vroom_write(x = dfAZMetData(), file = file, delim = "\t")
