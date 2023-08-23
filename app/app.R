@@ -632,11 +632,11 @@ server <- function(input, output, session) {
   
   # Reactive events -----
   
-  # Download/load and prep AZMet data
+  # AZMet data ELT
   dfAZMetData <- eventReactive(input$previewData, {
     if (input$startDate > input$endDate) {
       validate(
-        "Please select a 'Start Date' that is not later than the 'End Date'.",
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
         errorClass = "datepicker"
       )
     }
@@ -659,11 +659,26 @@ server <- function(input, output, session) {
     )
   })
   
+  # Format AZMet data for HTML table preview
+  dfAZMetDataPreview <- eventReactive(input$previewData, {
+    if (input$startDate > input$endDate) {
+      validate(
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+        errorClass = "datepicker"
+      )
+    }
+    
+    fxnAZMetDataPreview(
+      inData = dfAZMetData(), 
+      timeStep = input$timeStep
+    )
+  })
+  
   # Build table caption
   tableCaption <- eventReactive(input$previewData, {
     if (input$startDate > input$endDate) {
       validate(
-        "Please select a 'Start Date' that is not later than the 'End Date'.",
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
         errorClass = "datepickerblank"
       )
     }
@@ -675,7 +690,7 @@ server <- function(input, output, session) {
   tableTitle <- eventReactive(input$previewData, {
     if (input$startDate > input$endDate) {
       validate(
-        "Please select a 'Start Date' that is not later than the 'End Date'.",
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
         errorClass = "datepickerblank"
       )
     }
@@ -691,7 +706,7 @@ server <- function(input, output, session) {
   # Outputs -----
   
   output$dataTablePreview <- renderTable(
-    expr = fxnDataPreview(inData = dfAZMetData(), timeStep = input$timeStep), 
+    expr = dfAZMetDataPreview(), 
     striped = TRUE, 
     hover = TRUE, 
     bordered = FALSE, 
