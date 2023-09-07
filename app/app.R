@@ -51,11 +51,11 @@ ui <- fluidPage(
       <link rel="shortlink" href=""> <!-- https://staging.azmet.arizona.edu/node/44 -->
       <link rel="revision" href=""> <!-- https://staging.azmet.arizona.edu/application-areas/chill/station-level-summaries-for-chill -->
       
-      <script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/config.js?sdkid=C4PARG9PGM656MIKL3R0&amp;hostname=staging.azmet.arizona.edu"></script>
-      <script async="true" src="https://tr.snapchat.com/config/edu/5faf3b90-c2fa-4e6e-bc7d-0d3ff6b1ad2c.js" crossorigin="anonymous"></script>
+      <!-- script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/config.js?sdkid=C4PARG9PGM656MIKL3R0&amp;hostname=staging.azmet.arizona.edu"></script -->
+      <!-- script async="true" src="https://tr.snapchat.com/config/edu/5faf3b90-c2fa-4e6e-bc7d-0d3ff6b1ad2c.js" crossorigin="anonymous"></script -->
       <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-7PV3540XS3&amp;l=dataLayer&amp;cx=c"></script>
-      <script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=C4PARG9PGM656MIKL3R0&amp;lib=ttq"></script>
-      <script type="text/javascript" async="" src="https://sc-static.net/scevent.min.js"></script>
+      <!-- script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=C4PARG9PGM656MIKL3R0&amp;lib=ttq"></script -->
+      <!-- script type="text/javascript" async="" src="https://sc-static.net/scevent.min.js"></script -->
       <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
       <script src="https://www.googletagmanager.com/gtm.js?id=GTM-ML2BZB" async=""></script>
       <script src="/sites/default/files/google_tag/az_comprehensive/google_tag.script.js?rmhodt" defer=""></script>
@@ -132,7 +132,7 @@ ui <- fluidPage(
       <link rel="stylesheet" media="all" href="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/2.0.13/css/arizona-bootstrap.min.css">
       <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/themes/custom/az_barrio/css/az-barrio-off-canvas-nav.css?rmhodt">
       
-      <script charset="utf-8" src="https://analytics.tiktok.com/i18n/pixel/identify.js"></script>
+      <!-- script charset="utf-8" src="https://analytics.tiktok.com/i18n/pixel/identify.js"></script -->
       
       <!-- for all apps -->
       <style>body {font-size: 125% !important;}</style>
@@ -611,8 +611,8 @@ ui <- fluidPage(
         <script src="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/modules/custom/az_paragraphs/js/az_paragraphs_full_width.js?v=9.2.18"></script>
         <script src="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/themes/custom/az_barrio/js/az-barrio-off-canvas-nav.js?rmhodt"></script>
         
-        <script type="text/javascript" id="">!function(d,g,e){d.TiktokAnalyticsObject=e;var a=d[e]=d[e]||[];a.methods="page track identify instances debug on off once ready alias group enableCookie disableCookie".split(" ");a.setAndDefer=function(b,c){b[c]=function(){b.push([c].concat(Array.prototype.slice.call(arguments,0)))}};for(d=0;d<a.methods.length;d++)a.setAndDefer(a,a.methods[d]);a.instance=function(b){b=a._i[b]||[];for(var c=0;c<a.methods.length;c++)a.setAndDefer(b,a.methods[c]);return b};a.load=function(b,c){var f="https://analytics.tiktok.com/i18n/pixel/events.js";
-        a._i=a._i||{};a._i[b]=[];a._i[b]._u=f;a._t=a._t||{};a._t[b]=+new Date;a._o=a._o||{};a._o[b]=c||{};c=document.createElement("script");c.type="text/javascript";c.async=!0;c.src=f+"?sdkid\x3d"+b+"\x26lib\x3d"+e;b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(c,b)};a.load("C4PARG9PGM656MIKL3R0");a.page()}(window,document,"ttq");</script>
+        <!-- script type="text/javascript" id="">!function(d,g,e){d.TiktokAnalyticsObject=e;var a=d[e]=d[e]||[];a.methods="page track identify instances debug on off once ready alias group enableCookie disableCookie".split(" ");a.setAndDefer=function(b,c){b[c]=function(){b.push([c].concat(Array.prototype.slice.call(arguments,0)))}};for(d=0;d<a.methods.length;d++)a.setAndDefer(a,a.methods[d]);a.instance=function(b){b=a._i[b]||[];for(var c=0;c<a.methods.length;c++)a.setAndDefer(b,a.methods[c]);return b};a.load=function(b,c){var f="https://analytics.tiktok.com/i18n/pixel/events.js";
+        a._i=a._i||{};a._i[b]=[];a._i[b]._u=f;a._t=a._t||{};a._t[b]=+new Date;a._o=a._o||{};a._o[b]=c||{};c=document.createElement("script");c.type="text/javascript";c.async=!0;c.src=f+"?sdkid\x3d"+b+"\x26lib\x3d"+e;b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(c,b)};a.load("C4PARG9PGM656MIKL3R0");a.page()}(window,document,"ttq");</script -->
       
       </body>
         	
