@@ -51,11 +51,11 @@ ui <- fluidPage(
       <link rel="shortlink" href=""> <!-- https://staging.azmet.arizona.edu/node/44 -->
       <link rel="revision" href=""> <!-- https://staging.azmet.arizona.edu/application-areas/chill/station-level-summaries-for-chill -->
       
-      <script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/config.js?sdkid=C4PARG9PGM656MIKL3R0&amp;hostname=staging.azmet.arizona.edu"></script>
-      <script async="true" src="https://tr.snapchat.com/config/edu/5faf3b90-c2fa-4e6e-bc7d-0d3ff6b1ad2c.js" crossorigin="anonymous"></script>
+      <!-- script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/config.js?sdkid=C4PARG9PGM656MIKL3R0&amp;hostname=staging.azmet.arizona.edu"></script -->
+      <!-- script async="true" src="https://tr.snapchat.com/config/edu/5faf3b90-c2fa-4e6e-bc7d-0d3ff6b1ad2c.js" crossorigin="anonymous"></script -->
       <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-7PV3540XS3&amp;l=dataLayer&amp;cx=c"></script>
-      <script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=C4PARG9PGM656MIKL3R0&amp;lib=ttq"></script>
-      <script type="text/javascript" async="" src="https://sc-static.net/scevent.min.js"></script>
+      <!-- script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=C4PARG9PGM656MIKL3R0&amp;lib=ttq"></script -->
+      <!-- script type="text/javascript" async="" src="https://sc-static.net/scevent.min.js"></script -->
       <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
       <script src="https://www.googletagmanager.com/gtm.js?id=GTM-ML2BZB" async=""></script>
       <script src="/sites/default/files/google_tag/az_comprehensive/google_tag.script.js?rmhodt" defer=""></script>
@@ -132,7 +132,7 @@ ui <- fluidPage(
       <link rel="stylesheet" media="all" href="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/2.0.13/css/arizona-bootstrap.min.css">
       <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/themes/custom/az_barrio/css/az-barrio-off-canvas-nav.css?rmhodt">
       
-      <script charset="utf-8" src="https://analytics.tiktok.com/i18n/pixel/identify.js"></script>
+      <!-- script charset="utf-8" src="https://analytics.tiktok.com/i18n/pixel/identify.js"></script -->
       
       <!-- for all apps -->
       <style>body {font-size: 125% !important;}</style>
