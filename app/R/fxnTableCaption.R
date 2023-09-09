@@ -38,7 +38,7 @@ fxnTableCaption <- function(timeStep) {
       target="_blank"
     )
     
-    tableCaption <- HTML(
+    tableCaption <- htmltools::HTML(
       "<p style='color: #343a40; font-weight: plain; margin-top: 0;'>", 
       paste0(timeStep, " ", "AZMet data are from", " ", apiURL, ".", " ", "Table values from recent dates may be based on provisional data", ".", " ", "More information about", " ", webpageDataVariables, ",", " ", webpageNetworkMap, ",", " ", "and", " ", webpageStationMetadata, " ", "is available on the", " ", webpageAZMet, ".", " ", "Users of AZMet data and data applications assume all risks of its use", "."),
     "<br><br>",
@@ -54,7 +54,7 @@ fxnTableCaption <- function(timeStep) {
       target="_blank"
     )
     
-    tableCaption <- HTML(
+    tableCaption <- htmltools::HTML(
       "<p style='color: #343a40; font-weight: plain; margin-top: 0;'>", 
       paste0(timeStep, " ", "AZMet data are from", " ", apiURL, ".", " ", "Table values from recent dates may be based on provisional data", ".", " ", "More information about", " ", webpageDataVariables, ",", " ", webpageNetworkMap, ",", " ", "and", " ", webpageStationMetadata, " ", "is available on the", " ", webpageAZMet, ".", " ", "Users of AZMet data and data applications assume all risks of its use", "."),
       "<br><br>",

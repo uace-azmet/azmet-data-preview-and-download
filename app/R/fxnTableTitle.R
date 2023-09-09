@@ -7,7 +7,7 @@
 # @return: tableTitle - table title for HTML table based on user input
 # 
 fxnTableTitle <- function(station, timeStep, startDate, endDate) {
-  tableTitle <- HTML(
+  tableTitle <- htmltools::HTML(
     "<h3 style='color: #343a40; font-weight: bold; margin-top: 0; margin-bottom: 0;'>", 
     paste("Preview of", timeStep, "Data from the AZMet", station, "station", sep = " "), 
     "</h3>", 
