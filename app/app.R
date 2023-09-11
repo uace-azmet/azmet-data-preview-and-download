@@ -3,7 +3,14 @@
 # Preview and download hourly and daily data by specified stations and date ranges from API database
 
 
-# SETUP -------------------------
+# Edit the following [in square brackets]:
+# 
+# 'azmet-shiny-template.html': <title>[Web Application Title] | Arizona Meteorological Network</title>
+# 'azmet-shiny-template.html': <h1 class="hidden title"><span class="field field--name-title field--type-string field--label-hidden">[Hidden Title]</span></h1>
+# 'azmet-shiny-template.html': <article role="article" about="[/application-areas]" class="node node--type-az-flexible-page node--view-mode-full clearfix">
+# 'azmet-shiny-template.html': <span class="lm-az"></span>
+# 'azmet-shiny-template.html': <h1 class="mt-4 d-inline">[Web Tool Name]</h1>
+# 'azmet-shiny-template.html': <h4 class="mb-0 mt-2">[High-level text summary]</h4>
 
 
 # Libraries
@@ -21,37 +28,11 @@ library(vroom)
 #source("./R/scr##DEF.R", local = TRUE)
 
 
-# SHINY APP: UI  -------------------------
-
-
-ui <- fluidPage(
+# UI --------------------
+ui <- htmltools::htmlTemplate(
+  "azmet-shiny-template.html",
   
-  title = "Data Preview and Download | Arizona Meteorological Network", # Edit this based on individual web app
-  
-  shiny::tags$html(
-    lang="en", dir="ltr", prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema#", class="sticky-footer"
-  ),
-  
-  shiny::tags$head(
-    htmltools::includeHTML("www/head.html")
-  ),
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body1.html"), 
-    class="exclude-node-title layout-no-sidebars path-node node--type-az-flexible-page"
-  ),
-  
-  shiny::tags$header(
-    htmltools::includeHTML("www/header.html"), 
-    id="header", class="header", role="banner", `aria-label`="Site header"
-  ),
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body2.html")
-  ),
-  
-  # <body> : Shiny app start -----
-  sidebarLayout(
+  sidebarLayout = sidebarLayout(
     position = "left",
     
     sidebarPanel(
@@ -141,28 +122,11 @@ ui <- fluidPage(
       ),
       br()
     ) # mainPanel()
-  ), # sidebarLayout()
-  # <body> : Shiny app end -----
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body3.html")
-  ),
-  
-  shiny::tags$footer(
-    htmltools::includeHTML("www/footer.html"), 
-    class = "site-footer"
-  ),
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body4.html")
-  )
-  
-) # fluidPage()
+  ) # sidebarLayout()
+) # htmltools::htmlTemplate()
 
 
-# SHINY APP: SERVER  --------------------
-
-
+# Server --------------------
 server <- function(input, output, session) {
   
   # Reactive events -----
@@ -283,11 +247,5 @@ server <- function(input, output, session) {
 }
 
 
-# SHINY APP: RUN  --------------------
-
-
+# Run --------------------
 shinyApp(ui, server)
-
-
-# FIN  --------------------
-
