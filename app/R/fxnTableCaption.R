@@ -2,7 +2,8 @@
 # 
 # @param: timeStep - AZMet data time step
 # @return: tableCaption - table caption for HTML table based on user input
-# 
+
+
 fxnTableCaption <- function(timeStep) {
   webpageAZMet <- a(
     "AZMet website", 

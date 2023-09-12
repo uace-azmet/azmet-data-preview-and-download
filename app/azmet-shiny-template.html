@@ -12,7 +12,7 @@
     <!-- link rel="shortlink" href="https://staging.azmet.arizona.edu/node/6" /-->
     <!-- link rel="revision" href="https://staging.azmet.arizona.edu/past-data" /-->
     <script src="https://staging.azmet.arizona.edu/sites/default/files/google_tag/az_comprehensive/google_tag.script.js?s0j7xh" defer></script>
-    <title>[Web Application Title] | Arizona Meteorological Network</title> <!-- Edit this line based on individual Shiny app -->
+    <title>Data Preview and Download | Arizona Meteorological Network</title> <!-- Edit this line based on individual Shiny app -->
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/modules/custom/az_flexible_page/css/az_flexible_page.theme.css?s0j7xh" />
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/core/modules/system/css/components/ajax-progress.module.css?s0j7xh" />
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/core/modules/system/css/components/align.module.css?s0j7xh" />
@@ -82,20 +82,23 @@
     <link rel="stylesheet" media="all" href="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/2.0.13/css/arizona-bootstrap.min.css" />
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/themes/custom/az_barrio/css/az-barrio-off-canvas-nav.css?s0j7xh" />
     <!-- Code specific to AZMet Shiny app -->
-    <style>#downloadTSV {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
-    <style>#downloadTSV:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
-    <style>#downloadTSV:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
-    <style>#previewData {background-color: transparent !important; border-color: #001C48 !important; color: #001C48 !important; font-size: 100% !important; padding-top: 6px !important; padding-bottom: 6px !important;}</style>
-    <style>#previewData:focus {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: 6px !important;}</style>
-    <style>#previewData:hover {background-color: #001C48 !important; border: 0 px !important; color: #FFFFFF !important; outline: none !important;}</style>
-    <style>#sidebarPanel {background-color: #E2E9EB !important; border-radius: 0px !important; padding-bottom: 24px !important; padding-top: 12px !important; margin-bottom: 72px !important;}</style>
-    <style>.datepicker {background-color: #FFFFFF !important; color: #000000 !important; font-size: 100% !important;}</style>
-    <style>.form-control {font-size: 100% !important;}</style>
+    <!-- class -->
+    <style>.control-label {font-weight: bold;}</style>
+    <style>.datepicker {background-color: #fff !important; color: #343a40;}</style>
+    <style>.help-block {color: #343a40; }</style>
     <style>.shiny-html-output {max-height: 381px; min-height: auto; overflow: auto;}</style>
     <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
-    <style>.shiny-output-error-datepicker {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
-    <style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style>
-    <style>.shiny-notification {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: italic; font-weight: medium; margin-bottom: 20px; padding: 12px; position: fixed; top: calc(50%); left: calc(40%)}</style>
+    <!--style>.shiny-output-error-datepicker {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style-->
+    <!--style>.shiny-output-error-datepickerBlank {background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 0); color: #FFFFFF; font-size: 125%; font-style: regular; font-weight: bold; margin-bottom: 20px; padding: 12px;}</style-->
+    <!--style>.shiny-notification {background-color: #403635; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%); color: #FFFFFF; font-size: 125%; font-style: italic; font-weight: medium; margin-bottom: 20px; padding: 12px; position: fixed; top: calc(50%); left: calc(40%)}</style-->
+    <!-- id -->
+    <style>#downloadTSV {background-color: transparent; border-color: #001C48; color: #001C48; font-size: 100%; padding-top: 6px; padding-bottom: 6px; type: button;}</style>
+    <style>#downloadTSV:active {background-color: #001C48; border: 0 px; color: #FFFFFF; outline: 6px;}</style>
+    <style>#downloadTSV:hover {background-color: #001C48; border: 0 px; color: #FFFFFF; outline: none;}</style>
+    <style>#previewData {background-color: transparent; border-color: #001C48; color: #001C48; font-size: 100%; padding-top: 6px; padding-bottom: 6px;}</style>
+    <style>#previewData:active {background-color: #001C48; border: 0 px; color: #FFFFFF; outline: 6px;}</style>
+    <style>#previewData:hover {background-color: #001C48; border: 0 px; color: #FFFFFF; outline: none;}</style>
+    <style>#sidebarPanel {background-color: #E2E9EB !important; margin-bottom: 72px}</style>
     <!-- Shiny head code, https://shiny.posit.co/r/articles/build/templates/ -->
     {{ headContent() }}
   </head>
@@ -252,12 +255,12 @@
                     <section class="region region-content">
                       <div id="block-az-barrio-page-title" class="block block-core block-page-title-block">
                         <div class="content">
-                          <h1 class="hidden title"><span class="field field--name-title field--type-string field--label-hidden">[Hidden Title]</span></h1> <!-- Edit this line based on individual Shiny app -->
+                          <h1 class="hidden title"><span class="field field--name-title field--type-string field--label-hidden">Data Preview and Download</span></h1> <!-- Edit this line based on individual Shiny app -->
                         </div>
                       </div>
                       <div id="block-az-barrio-content" class="block block-system block-system-main-block">
                         <div class="content">
-                          <article role="article" about="[/application-areas]" class="node node--type-az-flexible-page node--view-mode-full clearfix"> <!-- Edit this line based on individual Shiny app -->
+                          <article role="article" about="https://viz.datascience.arizona.edu/azmet/azmet-data-preview-and-download/" class="node node--type-az-flexible-page node--view-mode-full clearfix"> <!-- Edit this line based on individual Shiny app -->
                             <div class="node__content clearfix">
                               <div class="field field--name-field-az-main-content field--type-entity-reference-revisions field--label-hidden field__items">
                                 <div class="field__item">
@@ -269,11 +272,11 @@
                                             <div class="clearfix text-formatted field field--name-field-az-text-area field--type-text-long field--label-hidden field__item">
                                               <div class="d-flex flex-nowrap">
                                                 <div class="icon-circle d-flex justify-content-center align-items-center mr-3">
-                                                  <span class="lm-az"></span> <!-- Edit this line based on individual Shiny app --> <!-- icon list at: https://staging.azmet.arizona.edu/modules/custom/azmet_views/fonts/icomoon/style.css -->
+                                                  <span class="lm-wrench"></span> <!-- Edit this line based on individual Shiny app --> <!-- icon list at: https://staging.azmet.arizona.edu/modules/custom/azmet_views/fonts/icomoon/style.css -->
                                                 </div>
                                                 <div class="titles">
-                                                  <h2 class="mt-4 d-inline">[Web Tool Name]</h2> <!-- Edit this line based on individual Shiny app -->
-                                                  <h5 class="mb-0 mt-2">[High-level text summary]</h5> <!-- Edit this line based on individual Shiny app -->
+                                                  <h2 class="mt-4 d-inline">Data Preview and Download</h2> <!-- Edit this line based on individual Shiny app -->
+                                                  <h5 class="mb-0 mt-2">Preview and download hourly and daily data by station and date range</h5> <!-- Edit this line based on individual Shiny app -->
                                                 </div>
                                               </div>
                                             </div>
@@ -294,10 +297,10 @@
               </div>
             </div>
             <div class="container">
-              <div>
+              <!-- div -->
                 <!-- Shiny app -->
                 {{sidebarLayout}}
-              </div>
+              <!-- /div -->
             </div>
             <div class="container">
               <br><br>

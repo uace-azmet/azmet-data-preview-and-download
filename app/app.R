@@ -3,16 +3,6 @@
 # Preview and download hourly and daily data by specified stations and date ranges from API database
 
 
-# Edit the following [in square brackets]:
-# 
-# 'azmet-shiny-template.html': <title>[Web Application Title] | Arizona Meteorological Network</title>
-# 'azmet-shiny-template.html': <h1 class="hidden title"><span class="field field--name-title field--type-string field--label-hidden">[Hidden Title]</span></h1>
-# 'azmet-shiny-template.html': <article role="article" about="[/application-areas]" class="node node--type-az-flexible-page node--view-mode-full clearfix">
-# 'azmet-shiny-template.html': <span class="lm-az"></span>
-# 'azmet-shiny-template.html': <h1 class="mt-4 d-inline">[Web Tool Name]</h1>
-# 'azmet-shiny-template.html': <h4 class="mb-0 mt-2">[High-level text summary]</h4>
-
-
 # Libraries
 library(azmetr)
 library(dplyr)
@@ -29,6 +19,7 @@ library(vroom)
 
 
 # UI --------------------
+
 ui <- htmltools::htmlTemplate(
   "azmet-shiny-template.html",
   
@@ -127,6 +118,7 @@ ui <- htmltools::htmlTemplate(
 
 
 # Server --------------------
+
 server <- function(input, output, session) {
   
   # Reactive events -----
@@ -220,7 +212,7 @@ server <- function(input, output, session) {
   
   output$downloadButtonTSV <- renderUI({
     req(dfAZMetData())
-    downloadButton("downloadTSV", label = "Download .tsv")
+    downloadButton("downloadTSV", label = "Download .tsv", class = "btn btn-default btn-blue", type = "button")
   })
   
   output$downloadTSV <- downloadHandler(
@@ -248,4 +240,5 @@ server <- function(input, output, session) {
 
 
 # Run --------------------
+
 shinyApp(ui, server)
