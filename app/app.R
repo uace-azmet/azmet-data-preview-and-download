@@ -128,7 +128,7 @@ server <- function(input, output, session) {
     if (input$startDate > input$endDate) {
       validate(
         "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerBlank"
+        errorClass = "datepicker"
       )
     }
     
@@ -152,12 +152,12 @@ server <- function(input, output, session) {
   
   # Format AZMet data for HTML table preview
   dfAZMetDataPreview <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerBlank"
-      )
-    }
+    #if (input$startDate > input$endDate) {
+    #  validate(
+    #    "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+    #    errorClass = "datepickerBlank"
+    #  )
+    #}
     
     fxnAZMetDataPreview(
       inData = dfAZMetData(), 
@@ -167,24 +167,24 @@ server <- function(input, output, session) {
   
   # Build table caption
   tableCaption <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerBlank"
-      )
-    }
+  #  if (input$startDate > input$endDate) {
+  #    validate(
+  #      "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+  #      errorClass = "datepickerBlank"
+  #    )
+  #  }
     
     tableCaption <- fxnTableCaption(timeStep = input$timeStep)
   })
   
   # Build table title
   tableTitle <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepicker"
-      )
-    }
+  #  if (input$startDate > input$endDate) {
+  #    validate(
+  #      "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
+  #      errorClass = "datepicker"
+  #    )
+  #  }
   
     tableTitle <- fxnTableTitle(
       station = input$station,
@@ -225,15 +225,17 @@ server <- function(input, output, session) {
   )
   
   output$tableFooter <- renderUI({
-    req(dfAZMetData())
-    helpText(em("Click or tap the button below to download a file of the previewed data with tab-separated values."))
+    #req(dfAZMetData())
+    helpText(em("Scroll over the table to view additional rows and columns. Click or tap the button below to download a file of the previewed data with tab-separated values."))
   })
   
   output$tableCaption <- renderUI({
+    req(dfAZMetData())#
     tableCaption()
   })
   
   output$tableTitle <- renderUI({
+    #req(dfAZMetData())#
     tableTitle()
   })
 }
