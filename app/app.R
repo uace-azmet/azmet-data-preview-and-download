@@ -21,6 +21,7 @@ library(vroom)
 # UI --------------------
 
 ui <- htmltools::htmlTemplate(
+  
   "azmet-shiny-template.html",
   
   sidebarLayout = sidebarLayout(
@@ -125,22 +126,24 @@ server <- function(input, output, session) {
   
   # AZMet data ELT
   dfAZMetData <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepicker"
-      )
-    }
+    validate(
+      need(
+        input$startDate <= input$endDate, 
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      ),
+      errorClass = "datepickerBlank"
+    )
     
     idPreview <- showNotification(
       ui = "Preparing data preview . . .", 
       action = NULL, 
       duration = NULL, 
-      closeButton = FALSE, 
+      closeButton = FALSE,
+      id = "idPreview",
       type = "message"
     )
     
-    on.exit(removeNotification(idPreview), add = TRUE)
+    on.exit(removeNotification(id = idPreview), add = TRUE)
     
     fxnAZMetDataELT(
       station = input$station, 
@@ -151,14 +154,7 @@ server <- function(input, output, session) {
   })
   
   # Format AZMet data for HTML table preview
-  dfAZMetDataPreview <- eventReactive(input$previewData, {
-    #if (input$startDate > input$endDate) {
-    #  validate(
-    #    "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-    #    errorClass = "datepickerBlank"
-    #  )
-    #}
-    
+  dfAZMetDataPreview <- eventReactive(dfAZMetData(), {
     fxnAZMetDataPreview(
       inData = dfAZMetData(), 
       timeStep = input$timeStep
@@ -166,26 +162,20 @@ server <- function(input, output, session) {
   })
   
   # Build table caption
-  tableCaption <- eventReactive(input$previewData, {
-  #  if (input$startDate > input$endDate) {
-  #    validate(
-  #      "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-  #      errorClass = "datepickerBlank"
-  #    )
-  #  }
-    
+  tableCaption <- eventReactive(dfAZMetData(), {
     tableCaption <- fxnTableCaption(timeStep = input$timeStep)
   })
   
   # Build table title
   tableTitle <- eventReactive(input$previewData, {
-  #  if (input$startDate > input$endDate) {
-  #    validate(
-  #      "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-  #      errorClass = "datepicker"
-  #    )
-  #  }
-  
+    validate(
+      need(
+        input$startDate <= input$endDate, 
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      ),
+      errorClass = "datepicker"
+    )
+    
     tableTitle <- fxnTableTitle(
       station = input$station,
       timeStep = input$timeStep,
@@ -225,17 +215,15 @@ server <- function(input, output, session) {
   )
   
   output$tableFooter <- renderUI({
-    #req(dfAZMetData())
+    req(dfAZMetData())
     helpText(em("Scroll over the table to view additional rows and columns. Click or tap the button below to download a file of the previewed data with tab-separated values."))
   })
   
   output$tableCaption <- renderUI({
-    req(dfAZMetData())#
     tableCaption()
   })
   
   output$tableTitle <- renderUI({
-    #req(dfAZMetData())#
     tableTitle()
   })
 }
