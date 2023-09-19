@@ -11,6 +11,9 @@
     <!-- link rel="canonical" href="https://staging.azmet.arizona.edu/past-data" /-->
     <!-- link rel="shortlink" href="https://staging.azmet.arizona.edu/node/6" /-->
     <!-- link rel="revision" href="https://staging.azmet.arizona.edu/past-data" /-->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HYPVJ988V5"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HYPVJ988V5');</script>
     <script src="https://staging.azmet.arizona.edu/sites/default/files/google_tag/az_comprehensive/google_tag.script.js?s0j7xh" defer></script>
     <title>Data Preview and Download | Arizona Meteorological Network</title> <!-- Edit this line based on individual Shiny app -->
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/modules/custom/az_flexible_page/css/az_flexible_page.theme.css?s0j7xh" />
@@ -40,7 +43,7 @@
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/modules/custom/azmet_views/css/azmet_views.css?s0j7xh" />
     <!-- Reference local fonts files instead -->
     <!-- link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/modules/custom/azmet_views/fonts/icomoon/style.css?s0j7xh" / -->
-    <link rel="stylesheet" media="all" href="style.css?s0j7xh" / >
+    <link rel="stylesheet" media="all" href="style.css?s0j7xh" />
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/modules/contrib/extlink/extlink.css?s0j7xh" />
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/modules/contrib/paragraphs/css/paragraphs.unpublished.css?s0j7xh" />
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/modules/custom/az_paragraphs/css/az_paragraphs_full_width.css?s0j7xh" />
@@ -81,24 +84,8 @@
     <link rel="stylesheet" media="all" href="https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css" />
     <link rel="stylesheet" media="all" href="https://cdn.digital.arizona.edu/lib/arizona-bootstrap/2.0.13/css/arizona-bootstrap.min.css" />
     <link rel="stylesheet" media="all" href="https://staging.azmet.arizona.edu/profiles/custom/az_quickstart/themes/custom/az_barrio/css/az-barrio-off-canvas-nav.css?s0j7xh" />
-    <!-- Code specific to AZMet Shiny app -->
-    <!-- class -->
-    <style>.control-label {font-weight: bold;}</style>
-    <style>.datepicker {background-color: #fff !important; color: #343a40;}</style>
-    <style>.help-block {color: #828282; }</style>
-    <style>.shiny-html-output {max-height: 381px; min-height: auto; overflow: auto;}</style>
-    <style>.shiny-html-output thead th {position: sticky; top: 0;}</style>
-    <style>.shiny-output-error-datepicker {background-color: #dee2e6; border: 1px solid rgba(0,0,0,.125); border-radius: 0px; color: #343a40 !important; font-style: italic; padding: 20px;}</style>
-    <style>.shiny-output-error-datepickerBlank {background-color: #fff; border: 1px solid #fff; border-radius: 0px; color: #fff !important; font-style: italic; padding: 20px;}</style>
-    <style>.shiny-notification {background-color: rgba(129,211,235,0.9) !important; border: none !important; box-shadow: 1px 2px rgba(0,0,0,0.1) !important; color: #1E5288 !important; font-style: italic !important; font-weight: bold !important; position: fixed !important; top: calc(50%) !important; left: calc(50% - 100px) !important;}</style>
-    <!-- id -->
-    <style>#downloadTSV {background-color: transparent; border-color: #001C48; color: #001C48; margin-bottom: 4px; margin-left: 4px; margin-top: 4px;}</style>
-    <style>#downloadTSV:active {background-color: #001C48; color: #fff;}</style>
-    <style>#downloadTSV:hover {background-color: #001C48; color: #fff;}</style>
-    <style>#previewData {background-color: transparent; border-color: #001C48; color: #001C48;}</style>
-    <style>#previewData:active {background-color: #001C48; color: #fff;}</style>
-    <style>#previewData:hover {background-color: #001C48; color: #fff;}</style>
-    <style>#sidebarPanel {background-color: #E2E9EB !important; margin-bottom: 72px}</style>
+    <!-- CSS specific to this AZMet Shiny app -->
+    <link rel="stylesheet" media="all" href="azmet-data-preview-and-download.css" />
     <!-- Shiny head code, https://shiny.posit.co/r/articles/build/templates/ -->
     {{ headContent() }}
   </head>
