@@ -5,7 +5,8 @@
 # @param: startDate - start date of period of interest
 # @param: endDate - end date of period of interest
 # @return: dfAZMetData - transformed data table
-# 
+
+
 fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
   
   # HOURLY

@@ -3,9 +3,6 @@
 # Preview and download hourly and daily data by specified stations and date ranges from API database
 
 
-# SETUP -------------------------
-
-
 # Libraries
 library(azmetr)
 library(dplyr)
@@ -21,37 +18,13 @@ library(vroom)
 #source("./R/scr##DEF.R", local = TRUE)
 
 
-# SHINY APP: UI  -------------------------
+# UI --------------------
 
-
-ui <- fluidPage(
+ui <- htmltools::htmlTemplate(
   
-  title = "Data Preview and Download | Arizona Meteorological Network", # Edit this based on individual web app
+  "azmet-shiny-template.html",
   
-  shiny::tags$html(
-    lang="en", dir="ltr", prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema#", class="sticky-footer"
-  ),
-  
-  shiny::tags$head(
-    htmltools::includeHTML("www/head.html")
-  ),
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body1.html"), 
-    class="exclude-node-title layout-no-sidebars path-node node--type-az-flexible-page"
-  ),
-  
-  shiny::tags$header(
-    htmltools::includeHTML("www/header.html"), 
-    id="header", class="header", role="banner", `aria-label`="Site header"
-  ),
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body2.html")
-  ),
-  
-  # <body> : Shiny app start -----
-  sidebarLayout(
+  sidebarLayout = sidebarLayout(
     position = "left",
     
     sidebarPanel(
@@ -141,27 +114,11 @@ ui <- fluidPage(
       ),
       br()
     ) # mainPanel()
-  ), # sidebarLayout()
-  # <body> : Shiny app end -----
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body3.html")
-  ),
-  
-  shiny::tags$footer(
-    htmltools::includeHTML("www/footer.html"), 
-    class = "site-footer"
-  ),
-  
-  shiny::tags$body(
-    htmltools::includeHTML("www/body4.html")
-  )
-  
-) # fluidPage()
+  ) # sidebarLayout()
+) # htmltools::htmlTemplate()
 
 
-# SHINY APP: SERVER  --------------------
-
+# Server --------------------
 
 server <- function(input, output, session) {
   
@@ -169,22 +126,24 @@ server <- function(input, output, session) {
   
   # AZMet data ELT
   dfAZMetData <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerBlank"
-      )
-    }
+    validate(
+      need(
+        input$startDate <= input$endDate, 
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      ),
+      errorClass = "datepickerBlank"
+    )
     
     idPreview <- showNotification(
       ui = "Preparing data preview . . .", 
       action = NULL, 
       duration = NULL, 
-      closeButton = FALSE, 
+      closeButton = FALSE,
+      id = "idPreview",
       type = "message"
     )
     
-    on.exit(removeNotification(idPreview), add = TRUE)
+    on.exit(removeNotification(id = idPreview), add = TRUE)
     
     fxnAZMetDataELT(
       station = input$station, 
@@ -195,14 +154,7 @@ server <- function(input, output, session) {
   })
   
   # Format AZMet data for HTML table preview
-  dfAZMetDataPreview <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerBlank"
-      )
-    }
-    
+  dfAZMetDataPreview <- eventReactive(dfAZMetData(), {
     fxnAZMetDataPreview(
       inData = dfAZMetData(), 
       timeStep = input$timeStep
@@ -210,26 +162,20 @@ server <- function(input, output, session) {
   })
   
   # Build table caption
-  tableCaption <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepickerBlank"
-      )
-    }
-    
+  tableCaption <- eventReactive(dfAZMetData(), {
     tableCaption <- fxnTableCaption(timeStep = input$timeStep)
   })
   
   # Build table title
   tableTitle <- eventReactive(input$previewData, {
-    if (input$startDate > input$endDate) {
-      validate(
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'.",
-        errorClass = "datepicker"
-      )
-    }
-  
+    validate(
+      need(
+        input$startDate <= input$endDate, 
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      ),
+      errorClass = "datepicker"
+    )
+    
     tableTitle <- fxnTableTitle(
       station = input$station,
       timeStep = input$timeStep,
@@ -256,7 +202,7 @@ server <- function(input, output, session) {
   
   output$downloadButtonTSV <- renderUI({
     req(dfAZMetData())
-    downloadButton("downloadTSV", label = "Download .tsv")
+    downloadButton("downloadTSV", label = "Download .tsv", class = "btn btn-default btn-blue", type = "button")
   })
   
   output$downloadTSV <- downloadHandler(
@@ -270,7 +216,7 @@ server <- function(input, output, session) {
   
   output$tableFooter <- renderUI({
     req(dfAZMetData())
-    helpText(em("Click or tap the button below to download a file of the previewed data with tab-separated values."))
+    helpText(em("Scroll over the table to view additional rows and columns. Click or tap the button below to download a file of the previewed data with tab-separated values."))
   })
   
   output$tableCaption <- renderUI({
@@ -283,11 +229,6 @@ server <- function(input, output, session) {
 }
 
 
-# SHINY APP: RUN  --------------------
-
+# Run --------------------
 
 shinyApp(ui, server)
-
-
-# FIN  --------------------
-
