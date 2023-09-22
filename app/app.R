@@ -94,6 +94,10 @@ ui <- htmltools::htmlTemplate(
         column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableTitle"))
       ), 
       
+      fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableSubtitle"))
+      ),
+      
       br(),
       fluidRow(
         column(width = 11, align = "left", offset = 1, tableOutput(outputId = "dataTablePreview"))
@@ -166,6 +170,22 @@ server <- function(input, output, session) {
     tableCaption <- fxnTableCaption(timeStep = input$timeStep)
   })
   
+  # Build table subtitle
+  tableSubtitle <- eventReactive(input$previewData, {
+    validate(
+      need(
+        input$startDate <= input$endDate, 
+        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+      ),
+      errorClass = "datepickerBlank"
+    )
+    
+    tableSubtitle <- fxnTableSubtitle(
+      startDate = input$startDate,
+      endDate = input$endDate
+    )
+  })
+  
   # Build table title
   tableTitle <- eventReactive(input$previewData, {
     validate(
@@ -178,9 +198,7 @@ server <- function(input, output, session) {
     
     tableTitle <- fxnTableTitle(
       station = input$station,
-      timeStep = input$timeStep,
-      startDate = input$startDate,
-      endDate = input$endDate
+      timeStep = input$timeStep
     )
   })
   
@@ -221,6 +239,10 @@ server <- function(input, output, session) {
   
   output$tableCaption <- renderUI({
     tableCaption()
+  })
+  
+  output$tableSubtitle <- renderUI({
+    tableSubtitle()
   })
   
   output$tableTitle <- renderUI({

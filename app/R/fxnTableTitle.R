@@ -2,20 +2,21 @@
 # 
 # @param: station - station selection by user
 # @param: timeStep - AZMet data time step
-# @param: startDate - data download start date selection by user
-# @param: endDate - data download end date selection by user
 # @return: tableTitle - table title for HTML table based on user input
 
 
-fxnTableTitle <- function(station, timeStep, startDate, endDate) {
-  tableTitle <- htmltools::HTML(
-    "<h4 style='color: #343a40; font-weight: bold; margin-top: 0; margin-bottom: 0;'>", 
-    paste("Preview of", timeStep, "Data from the AZMet", station, "station", sep = " "), 
-    "</h4>", 
-    "<p style='color: #343a40; font-weight: plain; margin-top: 0;'>", 
-    paste("From", gsub(" 0", " ", format(startDate, "%B %d, %Y")), "through", gsub(" 0", " ", format(endDate, "%B %d, %Y")), sep = " "), 
-    "</p>"
-  )
+fxnTableTitle <- function(station, timeStep) {
+  tableTitle <- 
+    htmltools::h4(
+      htmltools::HTML(
+        paste(
+          "Preview of", timeStep, "Data from the AZMet", station, "station", 
+          sep = " "
+        ),
+      ),
+      
+      class = "table-title"
+    )
   
   return(tableTitle)
 }
