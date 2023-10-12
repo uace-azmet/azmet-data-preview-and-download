@@ -1,18 +1,18 @@
-#' fxnAZMetDataELT: AZMet hourly or daily data download from API-based database
+#' `fxnAZMetDataELT.R` AZMet hourly or daily data download from API-based database
 #' 
-#' @param: station - AZMet station name
-#' @param: timeStep - AZMet data time step
-#' @param: startDate - start date of period of interest
-#' @param: endDate - end date of period of interest
-#' @return: dfAZMetData - transformed data table
+#' @param azmetStation - AZMet station name
+#' @param timeStep - AZMet data time step
+#' @param startDate - Start date of period of interest
+#' @param endDate - End date of period of interest
+#' @return `dfAZMetData` - Transformed data table
 
 
-fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
+fxnAZMetDataELT <- function(azmetStation, timeStep, startDate, endDate) {
   
   # HOURLY
   if (timeStep == "Hourly") {
     dfAZMetData <- azmetr::az_hourly(
-      station_id = dplyr::filter(stns, stationName == station)$stationID,
+      station_id = dplyr::filter(stns, stationName == azmetStation)$stationID,
       start_date_time = paste(startDate, "01", sep = " "),
       end_date_time = paste(endDate, "24", sep = " ")
     )
@@ -40,7 +40,7 @@ fxnAZMetDataELT <- function(station, timeStep, startDate, endDate) {
   # DAILY
   if (timeStep == "Daily") {
     dfAZMetData <- azmetr::az_daily(
-      station_id = dplyr::filter(stns, stationName == station)$stationID, 
+      station_id = dplyr::filter(stns, stationName == azmetStation)$stationID, 
       start = startDate, 
       end = endDate
     )
