@@ -38,7 +38,7 @@ ui <- htmltools::htmlTemplate(
         
         br(),
         selectInput(
-          inputId = "station", 
+          inputId = "azmetStation", 
           label = "AZMet Station",
           choices = stns[order(stns$stationName), ]$stationName,
           selected = "Aguila"
@@ -150,7 +150,7 @@ server <- function(input, output, session) {
     on.exit(removeNotification(id = idPreview), add = TRUE)
     
     fxnAZMetDataELT(
-      station = input$station, 
+      azmetStation = input$azmetStation, 
       timeStep = input$timeStep, 
       startDate = input$startDate, 
       endDate = input$endDate
@@ -202,7 +202,7 @@ server <- function(input, output, session) {
     )
     
     tableTitle <- fxnTableTitle(
-      station = input$station,
+      azmetStation = input$azmetStation,
       timeStep = input$timeStep
     )
   })
@@ -230,7 +230,7 @@ server <- function(input, output, session) {
   
   output$downloadTSV <- downloadHandler(
     filename = function() {
-      paste0(input$station, input$timeStep, input$startDate, "to", input$endDate, ".tsv")
+      paste0(input$azmetStation, input$timeStep, input$startDate, "to", input$endDate, ".tsv")
     },
     content = function(file) {
       vroom::vroom_write(x = dfAZMetData(), file = file, delim = "\t")
