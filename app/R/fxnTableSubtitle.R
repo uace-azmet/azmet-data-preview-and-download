@@ -1,8 +1,8 @@
-# fxnTableSubtitle: Build subtitle for HTML table based on current date
-# 
-# @param: startDate - start date of period of interest
-# @param: endDate - end date of period of interest
-# @return: tableSubtitle - subtitle for HTML table based on current date
+#' fxnTableSubtitle: Build subtitle for HTML table based on current date
+#' 
+#' @param: startDate - start date of period of interest
+#' @param: endDate - end date of period of interest
+#' @return: tableSubtitle - subtitle for HTML table based on current date
 
 
 fxnTableSubtitle <- function(startDate, endDate) {

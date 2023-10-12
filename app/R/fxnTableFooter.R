@@ -1,7 +1,7 @@
-# fxnTableFooter: Build footer for HTML table based on user input
-# 
-# @param: timeStep - AZMet data time step
-# @return: tableFooter - table footer for HTML table based on user input
+#' fxnTableFooter: Build footer for HTML table based on user input
+#' 
+#' @param: timeStep - AZMet data time step
+#' @return: tableFooter - table footer for HTML table based on user input
 
 
 fxnTableFooter <- function(timeStep) {

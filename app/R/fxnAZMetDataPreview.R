@@ -1,8 +1,8 @@
-# fxnAZMetDataPreview: Format downloaded AZMet hourly or daily data for HTML table preview
-# 
-# @param: inData - downloaded AZMet hourly or daily data
-# @param: timeStep - AZMet data time step
-# @return: dfAZMetDataPreview - data table formatted for HTML table
+#' fxnAZMetDataPreview: Format downloaded AZMet hourly or daily data for HTML table preview
+#' 
+#' @param: inData - downloaded AZMet hourly or daily data
+#' @param: timeStep - AZMet data time step
+#' @return: dfAZMetDataPreview - data table formatted for HTML table
 
 
 fxnAZMetDataPreview <- function(inData, timeStep) {
