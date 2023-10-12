@@ -1,8 +1,8 @@
-# fxnTableTitle: Build title for HTML table based on user input
-# 
-# @param: station - station selection by user
-# @param: timeStep - AZMet data time step
-# @return: tableTitle - table title for HTML table based on user input
+#' fxnTableTitle: Build title for HTML table based on user input
+#' 
+#' @param: station - station selection by user
+#' @param: timeStep - AZMet data time step
+#' @return: tableTitle - table title for HTML table based on user input
 
 
 fxnTableTitle <- function(station, timeStep) {
