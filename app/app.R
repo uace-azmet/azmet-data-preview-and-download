@@ -100,14 +100,18 @@ ui <- htmltools::htmlTemplate(
       
       br(),
       fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableHelpText"))
+      ),
+      
+      fluidRow(
         column(width = 11, align = "left", offset = 1, tableOutput(outputId = "dataTablePreview"))
       ), 
       
+      br(), br(),
       fluidRow(
         column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableCaption"))
       ),
       
-      br(),
       fluidRow(
         column(width = 11, align = "left", offset = 1, uiOutput(outputId = "downloadButtonTSV"))
       ),
@@ -167,12 +171,17 @@ server <- function(input, output, session) {
   
   # Build table caption
   tableCaption <- eventReactive(dfAZMetData(), {
-    tableCaption <- fxnTableCaption(timeStep = input$timeStep)
+    fxnTableCaption()
   })
   
   # Build table footer
   tableFooter <- eventReactive(dfAZMetData(), {
-    tableFooter <- fxnTableFooter(timeStep = input$timeStep)
+    fxnTableFooter(timeStep = input$timeStep)
+  })
+  
+  # Build table help text
+  tableHelpText <- eventReactive(dfAZMetData(), {
+    fxnTableHelpText()
   })
   
   # Build table subtitle
@@ -245,12 +254,15 @@ server <- function(input, output, session) {
   )
   
   output$tableCaption <- renderUI({
-    req(dfAZMetData())
-    helpText(em("Scroll over the table to view additional rows and columns. Click or tap the button below to download a file of the previewed data with tab-separated values."))
+    tableCaption()
   })
   
   output$tableFooter <- renderUI({
     tableFooter()
+  })
+  
+  output$tableHelpText <- renderUI({
+    tableHelpText()
   })
   
   output$tableSubtitle <- renderUI({
