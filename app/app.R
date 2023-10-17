@@ -225,12 +225,19 @@ server <- function(input, output, session) {
   
   output$downloadButtonTSV <- renderUI({
     req(dfAZMetData())
-    downloadButton("downloadTSV", label = "Download .tsv", class = "btn btn-default btn-blue", type = "button")
+    downloadButton(
+      "downloadTSV", 
+      label = "Download .tsv", 
+      class = "btn btn-default btn-blue", 
+      type = "button"
+    )
   })
   
   output$downloadTSV <- downloadHandler(
     filename = function() {
-      paste0(input$azmetStation, input$timeStep, input$startDate, "to", input$endDate, ".tsv")
+      paste0(
+        "AZMet ", input$azmetStation, " ", input$timeStep, " Data ", input$startDate, " to ", input$endDate, ".tsv"
+      )
     },
     content = function(file) {
       vroom::vroom_write(x = dfAZMetData(), file = file, delim = "\t")
