@@ -118,6 +118,10 @@ ui <- htmltools::htmlTemplate(
       
       br(), br(),
       fluidRow(
+        column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableFooterHelpText"))
+      ),
+      
+      fluidRow(
         column(width = 11, align = "left", offset = 1, htmlOutput(outputId = "tableFooter"))
       ),
       br()
@@ -177,6 +181,11 @@ server <- function(input, output, session) {
   # Build table footer
   tableFooter <- eventReactive(dfAZMetData(), {
     fxnTableFooter(timeStep = input$timeStep)
+  })
+  
+  # Build table footer help text
+  tableFooterHelpText <- eventReactive(dfAZMetData(), {
+    fxnTableFooterHelpText()
   })
   
   # Build table help text
@@ -259,6 +268,10 @@ server <- function(input, output, session) {
   
   output$tableFooter <- renderUI({
     tableFooter()
+  })
+  
+  output$tableFooterHelpText <- renderUI({
+    tableFooterHelpText()
   })
   
   output$tableHelpText <- renderUI({
