@@ -33,7 +33,7 @@ ui <- htmltools::htmlTemplate(
       
       verticalLayout(
         helpText(em(
-          "Select an AZMet station, specify the time step, and set dates for the period of interest. Then, click or tap 'Preview Data'."
+          "Select an AZMet station, specify the time step, and set dates for the period of interest. Then, click or tap 'PREVIEW DATA'."
         )),
         
         br(),

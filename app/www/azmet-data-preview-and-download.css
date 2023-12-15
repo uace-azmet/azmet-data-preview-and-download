@@ -12,6 +12,10 @@
   color: #828282;
 }
 
+.selectize-input.items.full.has-options.has-items {
+  border-radius: 0px;
+}
+
 .shiny-html-output {
   max-height: 381px; min-height: auto; overflow: auto;
 }
