@@ -44,7 +44,7 @@ fxnTableFooter <- function(timeStep) {
   
   webpageStationMetadata <- a(
     "station metadata", 
-    href="https://staging.azmet.arizona.edu/station/az01", 
+    href="https://staging.azmet.arizona.edu/about/station-metadata", 
     target="_blank"
   )
   
