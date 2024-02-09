@@ -139,11 +139,7 @@ server <- function(input, output, session) {
   # AZMet data ELT
   dfAZMetData <- eventReactive(input$previewData, {
     validate(
-      need(
-        input$startDate <= input$endDate, 
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
-      ),
-      errorClass = "datepickerBlank"
+      need(expr = input$plantingDate <= input$endDate, message = FALSE)
     )
     
     idPreview <- showNotification(
