@@ -1,2 +1,2 @@
-# azmet-data-preview-and-download
+# data-preview-and-download
 Shiny app to preview and download AZMet data
