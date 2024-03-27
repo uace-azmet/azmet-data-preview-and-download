@@ -20,7 +20,7 @@ fxnTableFooter <- function(timeStep) {
   
   webpageAZMet <- a(
     "AZMet website", 
-    href="https://staging.azmet.arizona.edu/", 
+    href="https://azmet.arizona.edu/", 
     target="_blank"
   )
   
@@ -32,19 +32,19 @@ fxnTableFooter <- function(timeStep) {
   
   webpageDataVariables <- a(
     "data variables", 
-    href="https://staging.azmet.arizona.edu/about/data-variables", 
+    href="https://azmet.arizona.edu/about/data-variables", 
     target="_blank"
   )
   
   webpageNetworkMap <- a(
     "station locations", 
-    href="https://staging.azmet.arizona.edu/about/network-map", 
+    href="https://azmet.arizona.edu/about/network-map", 
     target="_blank"
   )
   
   webpageStationMetadata <- a(
     "station metadata", 
-    href="https://staging.azmet.arizona.edu/about/station-metadata", 
+    href="https://azmet.arizona.edu/about/station-metadata", 
     target="_blank"
   )
   
@@ -67,9 +67,9 @@ fxnTableFooter <- function(timeStep) {
     htmltools::p(
       htmltools::HTML(
         paste0(
-          timeStep, " ", "AZMet data are from", " ", apiURL, " and accessed using the ", azmetrURL, " R package. Table values from recent dates may be based on provisional data", ".", " ", "More information about", " ", webpageDataVariables, ",", " ", webpageNetworkMap, ",", " ", "and", " ", webpageStationMetadata, " ", "is available on the", " ", webpageAZMet, ".", " ", "Users of AZMet data and data applications assume all risks of its use", ".",
+          timeStep, " ", "AZMet data are from", " ", apiURL, " and accessed using the ", azmetrURL, " R package. Table values from recent dates may be based on provisional data", ".", " ", "More information about", " ", webpageDataVariables, ",", " ", webpageNetworkMap, ",", " ", "and", " ", webpageStationMetadata, " ", "is available on the", " ", webpageAZMet, ".", " ", "Users of AZMet data and related information assume all risks of its use", ".",
           br(), br(),
-          "To cite the above AZMet data, please use: 'Arizona Meteorological Network (", todayYear, ") Arizona Meteorological Network (AZMet) Data. https://azmet.arizona.edu. Accessed", " ", todayDate, "'.",
+          "To cite the above AZMet data, please use: 'Arizona Meteorological Network (", todayYear, ") Arizona Meteorological Network (AZMet) Data. https:://azmet.arizona.edu. Accessed", " ", todayDate, "'.",
           br(), br(),
           "For information on how this webpage is put together, please visit the", " ", webpageCode, " ", "for this tool."
         )

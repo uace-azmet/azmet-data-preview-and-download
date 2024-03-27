@@ -139,7 +139,7 @@ server <- function(input, output, session) {
   # AZMet data ELT
   dfAZMetData <- eventReactive(input$previewData, {
     validate(
-      need(expr = input$plantingDate <= input$endDate, message = FALSE)
+      need(expr = input$startDate <= input$endDate, message = FALSE)
     )
     
     idPreview <- showNotification(
@@ -190,17 +190,9 @@ server <- function(input, output, session) {
   })
   
   # Build table subtitle
-  tableSubtitle <- eventReactive(input$previewData, {
-    validate(
-      need(
-        input$startDate <= input$endDate, 
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
-      ),
-      errorClass = "datepickerBlank"
-    )
-    
-    tableSubtitle <- fxnTableSubtitle(
-      startDate = input$startDate,
+  tableSubtitle <- eventReactive(dfAZMetData(), {
+    fxnTableSubtitle(
+      startDate = input$startDate, 
       endDate = input$endDate
     )
   })
@@ -209,13 +201,13 @@ server <- function(input, output, session) {
   tableTitle <- eventReactive(input$previewData, {
     validate(
       need(
-        input$startDate <= input$endDate, 
-        "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
+        expr = input$startDate <= input$endDate, 
+        message = "Please select a 'Start Date' that is earlier than or the same as the 'End Date'."
       ),
       errorClass = "datepicker"
     )
     
-    tableTitle <- fxnTableTitle(
+    fxnTableTitle(
       azmetStation = input$azmetStation,
       timeStep = input$timeStep
     )
